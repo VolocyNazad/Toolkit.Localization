@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
         run: dotnet build src/Toolkit.Localization/Toolkit.Localization.csproj --configuration Release --no-restore
 
       - name: Build the NuGet package
-        run: dotnet pack  src/Toolkit.Localization/Toolkit.Localization.csproj --configuration Release --output ${{env.DOTNET_ROOT}}\Package
+        run: dotnet pack src/Toolkit.Localization/Toolkit.Localization.csproj --configuration Release --output ${{env.DOTNET_ROOT}}\Package
 
       - name: Publish NuGet Package
         run: dotnet nuget push ${{env.DOTNET_ROOT}}\Package\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
