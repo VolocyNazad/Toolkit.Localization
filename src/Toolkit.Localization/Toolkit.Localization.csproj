@@ -6,6 +6,12 @@
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <Version>1.0.1</Version>
+    <PackageId>VolocyNazad.$(AssemblyName)</PackageId>
+    <Authors>VolocyNazad</Authors>
+    <Company>VolocyNazad</Company>
+    <Description>Extensions and implementations for 'Microsort.Extensions.Localization' and 'Microsort.Extensions.Localization.Abstractions'</Description>
+    <RepositoryUrl>https://github.com/VolocyNazad/Toolkit.Localization</RepositoryUrl>
+    <PackageTags>Localization</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
