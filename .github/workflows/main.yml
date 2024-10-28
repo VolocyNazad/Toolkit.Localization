@@ -33,7 +33,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Install dependencies
-        run: dotnet restore src/Toolkit.Localization.sln
+        run: dotnet restore Toolkit.Localization.sln
 
       - name: Build
         run: dotnet build src/Toolkit.Localization/Toolkit.Localization.csproj --configuration Release --no-restore
