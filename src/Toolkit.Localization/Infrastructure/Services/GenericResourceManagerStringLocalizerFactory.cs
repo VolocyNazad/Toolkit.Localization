@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Reflection;
+using Toolkit.Localizations.Infrastructure.Attributes;
 
 namespace Toolkit.Localizations.Infrastructure.Services
 {
@@ -18,15 +19,37 @@ namespace Toolkit.Localizations.Infrastructure.Services
     {
         private readonly ResourceManagerStringLocalizerFactory _factory;
 
+        //public IStringLocalizer Create(Type resourceSource)
+        //{
+        //    TypeInfo typeInfo = resourceSource.GetTypeInfo();
+
+        //    if (!typeInfo.IsGenericType) return _factory.Create(resourceSource);
+
+        //    string assemblyName = resourceSource.GetTypeInfo().Assembly.GetName().Name;
+        //    string typeName = resourceSource.Name.Remove(resourceSource.Name.IndexOf('`'));
+
+        //    string baseName = ($"{resourceSource.Namespace}.{typeName}")
+        //        .Substring(assemblyName.Length).Trim('.');
+
+        //    return Create(baseName, assemblyName);
+        //}
+
         public IStringLocalizer Create(Type resourceSource)
         {
             TypeInfo typeInfo = resourceSource.GetTypeInfo();
+            string assemblyName = typeInfo.Assembly.GetName().Name;
 
-            if (!typeInfo.IsGenericType) return _factory.Create(resourceSource);
+            var attribute = resourceSource.GetCustomAttribute<LocalizationAliasAttribute>();
 
-            string assemblyName = resourceSource.GetTypeInfo().Assembly.GetName().Name;
-            string typeName = resourceSource.Name.Remove(resourceSource.Name.IndexOf('`'));
+            string typeName;
+            if (attribute != null) typeName = attribute.Alias;
+            else
+            {
+                typeName = resourceSource.Name;
+                if (typeInfo.IsGenericType) 
+                    typeName = typeName.Remove(resourceSource.Name.IndexOf('`'));
 
+            }
             string baseName = ($"{resourceSource.Namespace}.{typeName}")
                 .Substring(assemblyName.Length).Trim('.');
 
