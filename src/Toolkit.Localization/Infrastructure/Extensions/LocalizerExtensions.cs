@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using System;
 using Toolkit.Localizations.Abstractions.Services;
-using Toolkit.Localizations.Infrastructure.Attributes;
 using Toolkit.Localizations.Infrastructure.Services;
 
 namespace Toolkit.Localizations.Infrastructure.Extensions
@@ -24,6 +24,7 @@ namespace Toolkit.Localizations.Infrastructure.Extensions
                 .AddSingleton<ILocalizationTypeDefiner, InterfaceLocalizationTypeDefiner>()
                 .AddSingleton<ILocalizationTypeDefiner, GenericLocalizationTypeDefiner>()
                 .AddSingleton<ILocalizationTypeDefiner, AllGenericLocalizationTypeDefiner>();
+            services.AddSingleton((IConfigureOptions<LocalizationOptions>)new DefaultLocalizationOptionsResourcePathConfigureOptions("Localizations"));
             if (action != null) services.Configure(action);
 
             return services;
