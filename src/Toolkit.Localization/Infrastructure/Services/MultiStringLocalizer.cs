@@ -30,12 +30,12 @@ namespace Toolkit.Localizations.Infrastructure.Services
             _logger = logger ?? NullLogger<MultiStringLocalizer>.Instance;
         }
 
-        [Obsolete("Obsolete")]
-        private MultiStringLocalizer(List<IStringLocalizer> localizers, ILogger<MultiStringLocalizer> logger, CultureInfo cultureInfo)
-            : this(localizers.Select(l => l.WithCulture(cultureInfo)).ToList(), logger)
-        {
-            _cultureInfo = cultureInfo;
-        } 
+        //[Obsolete("Obsolete")]
+        //private MultiStringLocalizer(List<IStringLocalizer> localizers, ILogger<MultiStringLocalizer> logger, CultureInfo cultureInfo)
+        //    : this(localizers.Select(l => l.WithCulture(cultureInfo)).ToList(), logger)
+        //{
+        //    _cultureInfo = cultureInfo;
+        //} 
 
         #endregion
 
@@ -56,13 +56,13 @@ namespace Toolkit.Localizations.Infrastructure.Services
             return result.Values;
         }
 
-        [Obsolete("Obsolete")]
-        public IStringLocalizer WithCulture(CultureInfo culture)
-        {
-            return culture == null 
-                ? new MultiStringLocalizer(_localizers, _logger) 
-                : new MultiStringLocalizer(_localizers, _logger, culture);
-        }
+        //[Obsolete("Obsolete")]
+        //public IStringLocalizer WithCulture(CultureInfo culture)
+        //{
+        //    return culture == null 
+        //        ? new MultiStringLocalizer(_localizers, _logger) 
+        //        : new MultiStringLocalizer(_localizers, _logger, culture);
+        //}
 
         public LocalizedString this[string name]
         {
