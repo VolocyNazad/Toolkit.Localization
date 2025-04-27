@@ -9,13 +9,9 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class UseInterfacesStringLocalizationsAttribute : Attribute
     {
-        #region Constructors
-
         public UseInterfacesStringLocalizationsAttribute()
         {
 
         }
-
-        #endregion
     }
 }

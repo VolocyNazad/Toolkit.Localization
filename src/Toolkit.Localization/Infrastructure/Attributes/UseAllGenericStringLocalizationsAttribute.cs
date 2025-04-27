@@ -10,13 +10,9 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class UseAllGenericStringLocalizationsAttribute : Attribute
     {
-        #region Constructors
-
         public UseAllGenericStringLocalizationsAttribute()
         {
 
         }
-
-        #endregion
     }
 }

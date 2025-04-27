@@ -12,13 +12,9 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     {
         public string Alias { get; set; }
 
-        #region Constructors
-
         public LocalizationAliasAttribute(string alias)
         {
             Alias = alias;
         }
-
-        #endregion
     }
 }

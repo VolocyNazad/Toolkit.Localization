@@ -11,8 +11,6 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     {
         public int Deep { get; set; } = 0;
 
-        #region Constructors
-
         public UseGenericStringLocalizationsAttribute(int deep)
         {
             Deep = deep;
@@ -22,7 +20,5 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
         {
 
         }
-
-        #endregion
     }
 }
