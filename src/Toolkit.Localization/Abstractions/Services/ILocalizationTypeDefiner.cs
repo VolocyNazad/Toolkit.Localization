@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Toolkit.Localizations.Abstractions.Services
+﻿namespace Toolkit.Localizations.Abstractions.Services
 {
     public interface ILocalizationTypeDefiner
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
@@ -9,12 +8,10 @@ namespace Toolkit.Localizations.Infrastructure.Services
     /// Provides strings for <typeparamref name="TResourceSource"/>.
     /// </summary>
     /// <typeparam name="TResourceSource">The <see cref="Type"/> to provide strings for.</typeparam>
-    internal class LoggedStringLocalizer<TResourceSource> : StringLocalizer<TResourceSource>
+    internal sealed class LoggedStringLocalizer<TResourceSource> : StringLocalizer<TResourceSource>
     {
         private readonly ILogger<LoggedStringLocalizer<TResourceSource>> _logger;
         private readonly CultureInfo _cultureInfo;
-
-        #region Constructors
 
         /// <summary> Creates a new <see cref="StringLocalizer{TResourceSource}"/>.</summary>
         /// <param name="factory">The <see cref="IStringLocalizerFactory"/> to use.</param>
@@ -29,8 +26,6 @@ namespace Toolkit.Localizations.Infrastructure.Services
         {
             _cultureInfo = cultureInfo;
         }
-
-        #endregion
 
         public override LocalizedString this[string name]
         {

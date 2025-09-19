@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Toolkit.Localizations.Abstractions.Services;
 
 namespace Toolkit.Localizations.Infrastructure.Services
@@ -27,8 +25,6 @@ namespace Toolkit.Localizations.Infrastructure.Services
         private readonly IEnumerable<ILocalizationTypeDefiner> _localizationTypeDefiners;
         private readonly ILoggerFactory _loggerFactory;
 
-        #region Constructors
-
         public InheritStringLocalizerFactory(
             IEnumerable<ILocalizationTypeDefiner> localizationTypeDefiners,
             IOptions<LocalizationOptions> localizationOptions, 
@@ -38,8 +34,6 @@ namespace Toolkit.Localizations.Infrastructure.Services
             _localizationTypeDefiners = localizationTypeDefiners;
             _loggerFactory = loggerFactory;
         }
-
-        #endregion
 
         public IStringLocalizer Create(string baseName, string location) => _factory.Create(baseName, location);
         public IStringLocalizer Create(Type resourceSource)

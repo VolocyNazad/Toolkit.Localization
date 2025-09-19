@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
+//using System.Globalization;
 
 namespace Toolkit.Localizations.Infrastructure.Services
 {
@@ -16,9 +13,7 @@ namespace Toolkit.Localizations.Infrastructure.Services
     {
         private readonly List<IStringLocalizer> _localizers;
         private readonly ILogger<MultiStringLocalizer> _logger;
-        private readonly CultureInfo _cultureInfo;
-
-        #region Constructors
+        //private readonly CultureInfo _cultureInfo;
 
         public MultiStringLocalizer(List<IStringLocalizer> localizers, ILogger<MultiStringLocalizer> logger)
         {
@@ -36,8 +31,6 @@ namespace Toolkit.Localizations.Infrastructure.Services
         //{
         //    _cultureInfo = cultureInfo;
         //} 
-
-        #endregion
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
@@ -68,7 +61,7 @@ namespace Toolkit.Localizations.Infrastructure.Services
         {
             get
             {
-                LocalizedString result = null;
+                LocalizedString? result = null;
                 foreach (var localizer in _localizers)
                 {
                     result = localizer[name];
@@ -85,7 +78,7 @@ namespace Toolkit.Localizations.Infrastructure.Services
         {
             get
             {
-                LocalizedString result = null;
+                LocalizedString? result = null;
                 foreach (var localizer in _localizers)
                 {
                     result = localizer[name, arguments];

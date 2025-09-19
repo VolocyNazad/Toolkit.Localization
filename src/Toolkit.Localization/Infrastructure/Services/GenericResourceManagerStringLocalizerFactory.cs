@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
 using System.Reflection;
 using Toolkit.Localizations.Infrastructure.Attributes;
 
@@ -18,6 +17,13 @@ namespace Toolkit.Localizations.Infrastructure.Services
     internal sealed class GenericResourceManagerStringLocalizerFactory : IStringLocalizerFactory
     {
         private readonly ResourceManagerStringLocalizerFactory _factory;
+
+        public GenericResourceManagerStringLocalizerFactory(
+            IOptions<LocalizationOptions> localizationOptions,
+            ILoggerFactory loggerFactory)
+        {
+            _factory = new ResourceManagerStringLocalizerFactory(localizationOptions, loggerFactory);
+        }
 
         //public IStringLocalizer Create(Type resourceSource)
         //{
@@ -57,16 +63,5 @@ namespace Toolkit.Localizations.Infrastructure.Services
         }
 
         public IStringLocalizer Create(string baseName, string location) => _factory.Create(baseName, location);
-
-        #region Constructors
-
-        public GenericResourceManagerStringLocalizerFactory(
-            IOptions<LocalizationOptions> localizationOptions, 
-            ILoggerFactory loggerFactory)
-        {
-            _factory = new ResourceManagerStringLocalizerFactory(localizationOptions, loggerFactory);
-        } 
-
-        #endregion
     }
 }

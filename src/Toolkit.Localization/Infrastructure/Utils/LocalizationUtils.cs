@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
 
 namespace Toolkit.Localizations.Infrastructure.Utils
 {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using System;
 using Toolkit.Localizations.Abstractions.Services;
 using Toolkit.Localizations.Infrastructure.Services;
 

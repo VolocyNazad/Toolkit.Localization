@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 
 namespace Toolkit.Localizations.Infrastructure.Attributes
 {
@@ -8,13 +7,8 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     /// Поиск выполняется во всей иерархии обобщений.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class LocalizationAliasAttribute : Attribute
+    public sealed class LocalizationAliasAttribute(string alias) : Attribute
     {
-        public string Alias { get; set; }
-
-        public LocalizationAliasAttribute(string alias)
-        {
-            Alias = alias;
-        }
+        public string Alias { get; set; } = alias;
     }
 }

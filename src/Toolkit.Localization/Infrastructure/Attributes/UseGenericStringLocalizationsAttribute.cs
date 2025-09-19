@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 
 namespace Toolkit.Localizations.Infrastructure.Attributes
 {
@@ -7,7 +6,7 @@ namespace Toolkit.Localizations.Infrastructure.Attributes
     /// Используется, чтобы указать локализатору <see cref="IStringLocalizer{T}"/> необходимость поиска значения в локализации его обобщений.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class UseGenericStringLocalizationsAttribute : Attribute
+    public sealed class UseGenericStringLocalizationsAttribute : Attribute
     {
         public int Deep { get; set; } = 0;
 
