@@ -1,7 +1,6 @@
-﻿namespace Toolkit.Localizations.Abstractions.Services
+﻿namespace Toolkit.Localizations.Abstractions.Services;
+
+public interface ILocalizationTypeDefiner
 {
-    public interface ILocalizationTypeDefiner
-    {
-        IEnumerable<Type> Define(Type type);
-    }
+    IEnumerable<Type> Define(Type type);
 }

@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
-namespace Toolkit.Localizations.Infrastructure.Extensions
+namespace Toolkit.Localizations.Infrastructure.Extensions;
+
+internal sealed class DefaultLocalizationOptionsResourcePathConfigureOptions
+    : ConfigureOptions<LocalizationOptions>
 {
-    internal sealed class DefaultLocalizationOptionsResourcePathConfigureOptions
-        : ConfigureOptions<LocalizationOptions>
+    public DefaultLocalizationOptionsResourcePathConfigureOptions(string path) : base(options =>
     {
-        public DefaultLocalizationOptionsResourcePathConfigureOptions(string path) : base(options =>
-        {
-            options.ResourcesPath = path;
-        }) { }
-    }
+        options.ResourcesPath = path;
+    }) { }
 }

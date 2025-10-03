@@ -2,25 +2,23 @@
 using Toolkit.Localizations.Abstractions.Services;
 using Toolkit.Localizations.Infrastructure.Attributes;
 
-namespace Toolkit.Localizations.Infrastructure.Services
-{
-    internal sealed class InterfaceLocalizationTypeDefiner : ILocalizationTypeDefiner
-    {
-        public IEnumerable<Type> Define(Type type)
-        {
-            var interfaceAttributes = type.GetCustomAttributes<UseInterfacesStringLocalizationsAttribute>();
-            if (interfaceAttributes.Any())
-            {
-                var result = new List<Type>();
+namespace Toolkit.Localizations.Infrastructure.Services;
 
-                IEnumerable<Type> types = type.GetInterfaces();
-                foreach (Type interfaceType in result)
-                {
-                    result.Add(interfaceType);
-                }
-                return result;
+internal sealed class InterfaceLocalizationTypeDefiner : ILocalizationTypeDefiner
+{
+    public IEnumerable<Type> Define(Type type)
+    {
+        var interfaceAttributes = type.GetCustomAttributes<UseInterfacesStringLocalizationsAttribute>();
+        if (interfaceAttributes.Any())
+        {
+            var result = new List<Type>();
+
+            foreach (Type interfaceType in result)
+            {
+                result.Add(interfaceType);
             }
-            return [];
+            return result;
         }
+        return [];
     }
 }

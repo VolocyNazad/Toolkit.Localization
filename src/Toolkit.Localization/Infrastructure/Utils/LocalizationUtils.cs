@@ -1,34 +1,33 @@
 ﻿using Microsoft.Extensions.Localization;
 
-namespace Toolkit.Localizations.Infrastructure.Utils
-{
-    public static class LocalizationUtils
-    {
-        /// <summary> Выполняет проверку подключения ресурса локализации</summary>
-        /// <param name="localizer"> Проверяемая локализация </param>
-        /// <returns> В случае, если локализация подключена, то возвращает true, в противном случае false</returns>
-        public static bool Check(IStringLocalizer localizer)
-        {
-            IEnumerable<LocalizedString> localizedStrings = localizer.GetAllStrings();
-            foreach (LocalizedString localizedString in localizedStrings)
-            {
-                if (localizedString.Name == localizedString.Value) return false;
-            }
+namespace Toolkit.Localizations.Infrastructure.Utils;
 
-            return true;
+public static class LocalizationUtils
+{
+    /// <summary> Выполняет проверку подключения ресурса локализации</summary>
+    /// <param name="localizer"> Проверяемая локализация </param>
+    /// <returns> В случае, если локализация подключена, то возвращает true, в противном случае false</returns>
+    public static bool Check(IStringLocalizer localizer)
+    {
+        IEnumerable<LocalizedString> localizedStrings = localizer.GetAllStrings();
+        foreach (LocalizedString localizedString in localizedStrings)
+        {
+            if (localizedString.Name == localizedString.Value) return false;
         }
 
-        /// <summary> Выполняет проверку подключения ресурса локализации</summary>
-        /// <param name="localizer"> Проверяемая локализация </param>
-        /// <returns> В случае, если локализация подключена, то ничего не возвращает, в противном случае выдает исключение </returns>
-        public static void ThrowCheck(IStringLocalizer localizer)
+        return true;
+    }
+
+    /// <summary> Выполняет проверку подключения ресурса локализации</summary>
+    /// <param name="localizer"> Проверяемая локализация </param>
+    /// <returns> В случае, если локализация подключена, то ничего не возвращает, в противном случае выдает исключение </returns>
+    public static void ThrowCheck(IStringLocalizer localizer)
+    {
+        IEnumerable<LocalizedString> localizedStrings = localizer.GetAllStrings();
+        foreach (LocalizedString localizedString in localizedStrings)
         {
-            IEnumerable<LocalizedString> localizedStrings = localizer.GetAllStrings();
-            foreach (LocalizedString localizedString in localizedStrings)
-            {
-                if (localizedString.Name == localizedString.Value) 
-                    throw new Exception("Not all localization data was connected");
-            }
+            if (localizedString.Name == localizedString.Value) 
+                throw new Exception("Not all localization data was connected");
         }
     }
 }

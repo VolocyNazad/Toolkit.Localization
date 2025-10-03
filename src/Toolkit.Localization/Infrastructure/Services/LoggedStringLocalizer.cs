@@ -2,65 +2,54 @@
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
-namespace Toolkit.Localizations.Infrastructure.Services
+namespace Toolkit.Localizations.Infrastructure.Services;
+
+/// <inheritdoc />
+internal sealed class LoggedStringLocalizer<TResourceSource>(
+    IStringLocalizerFactory factory,
+    ILogger<LoggedStringLocalizer<TResourceSource>> logger) : StringLocalizer<TResourceSource>(factory)
 {
-    /// <summary>
-    /// Provides strings for <typeparamref name="TResourceSource"/>.
-    /// </summary>
-    /// <typeparam name="TResourceSource">The <see cref="Type"/> to provide strings for.</typeparam>
-    internal sealed class LoggedStringLocalizer<TResourceSource> : StringLocalizer<TResourceSource>
+    private readonly ILogger<LoggedStringLocalizer<TResourceSource>> _logger = logger;
+
+    /// <inheritdoc />
+    public override LocalizedString this[string name]
     {
-        private readonly ILogger<LoggedStringLocalizer<TResourceSource>> _logger;
-        private readonly CultureInfo _cultureInfo;
-
-        /// <summary> Creates a new <see cref="StringLocalizer{TResourceSource}"/>.</summary>
-        /// <param name="factory">The <see cref="IStringLocalizerFactory"/> to use.</param>
-        public LoggedStringLocalizer(IStringLocalizerFactory factory, ILogger<LoggedStringLocalizer<TResourceSource>> logger) : base(factory)
+        get
         {
-            _logger = logger;
+            var result = base[name];
+            Log(result);
+            return result;
         }
+    }
 
-        [Obsolete("Obsolete")]
-        private LoggedStringLocalizer(IStringLocalizerFactory factory, ILogger<LoggedStringLocalizer<TResourceSource>> logger, CultureInfo cultureInfo)
-            : this(factory, logger)
+    /// <inheritdoc />
+    public override LocalizedString this[string name, params object[] arguments]
+    {
+        get
         {
-            _cultureInfo = cultureInfo;
+            var result = base[string.Format(name, arguments)];
+            Log(result);
+            return result;
         }
+    }
 
-        public override LocalizedString this[string name]
+    private void Log(LocalizedString localizedString)
+    {
+        if (!localizedString.ResourceNotFound)
         {
-            get
-            {
-                var result = base[name];
-                if (!result.ResourceNotFound)
-                {
-                    _logger.LogTrace(
-                        $"The localizer managed to get the value from the key '{result.Name}' in the resource '{result.SearchedLocation}' for the culture '{_cultureInfo ?? CultureInfo.CurrentUICulture}'.");
-                    return result;
-                }
-
-                _logger.LogWarning(
-                    $"Localizer failed to retrieve value for key '{result.Name}' in resource '{result.SearchedLocation}' for culture '{_cultureInfo ?? CultureInfo.CurrentUICulture}'.");
-                return result;
-            }
+            _logger.LogTrace(
+                $"""
+                    The localizer managed to get the value from the key '{localizedString.Name}' 
+                    in the resource '{localizedString.SearchedLocation}' for the culture '{CultureInfo.CurrentUICulture}'.
+                    """);
         }
-
-        public override LocalizedString this[string name, params object[] arguments]
+        else
         {
-            get
-            {
-                var result = base[string.Format(name, arguments)];
-                if (!result.ResourceNotFound)
-                {
-                    _logger.LogTrace(
-                        $"The localizer '{GetType()}' managed to get the value from the key '{result.Name}' in the resource '{result.SearchedLocation}' for the culture '{_cultureInfo ?? CultureInfo.CurrentUICulture}'.");
-                    return result;
-                }
-
-                _logger.LogWarning(
-                    $"Localizer '{GetType()}' failed to retrieve value for key '{result.Name}' in resource '{result.SearchedLocation}' for culture '{_cultureInfo ?? CultureInfo.CurrentUICulture}'.");
-                return result;
-            }
+            _logger.LogWarning(
+                $"""
+                Localizer failed to retrieve value for key '{localizedString.Name}' 
+                in resource '{localizedString.SearchedLocation}' for culture '{CultureInfo.CurrentUICulture}'.
+                """);
         }
     }
 }
