@@ -29,22 +29,27 @@ internal sealed class GenericResourceManagerStringLocalizerFactory(
         string assemblyName = typeInfo.Assembly.GetName().Name;
 
         var attribute = resourceSource.GetCustomAttribute<LocalizationAliasAttribute>();
-
-        string typeName;
+        IStringLocalizer localizer;
         if (attribute != null) {
-            typeName = attribute.Alias;
+            var typeName = attribute.Alias;
             _logger.LogTrace("An alias '{localization.alias}' was found for the type '{localization.type}'.", attribute.Alias, resourceSource);
+            string baseName = $"{resourceSource.Namespace}.{typeName}"[assemblyName.Length..].Trim('.');
+            localizer = _factory.Create(baseName, assemblyName);
         }
         else
         {
-            typeName = resourceSource.Name;
-            if (typeInfo.IsGenericType) 
+            if (typeInfo.IsGenericType) // До 6 версии базовая библиотека не работала с дженерик типами
+            {
+                var typeName = resourceSource.Name;
                 typeName = typeName[..resourceSource.Name.IndexOf('`')];
-
+                string baseName = $"{resourceSource.Namespace}.{typeName}"[assemblyName.Length..].Trim('.');
+                localizer = _factory.Create(baseName, assemblyName);
+            }
+            else
+            {
+                localizer = _factory.Create(resourceSource);
+            }
         }
-        string baseName = $"{resourceSource.Namespace}.{typeName}"[assemblyName.Length..].Trim('.');
-
-        var localizer = _factory.Create(baseName, assemblyName);
 
         _logger.LogTrace("localizer for type '{localization.type}' created.", resourceSource);
 

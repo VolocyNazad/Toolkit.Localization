@@ -7,6 +7,7 @@ namespace Toolkit.Localization.Testing
         public static IServiceCollection AddServices(this IServiceCollection services)
             => services
                 .AddSingleton<Service>()
+                .AddSingleton<Service2>()
                 .AddSingleton(typeof(Service<>))
             ;
     }
