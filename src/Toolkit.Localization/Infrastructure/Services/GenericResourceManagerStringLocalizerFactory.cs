@@ -19,16 +19,22 @@ internal sealed class GenericResourceManagerStringLocalizerFactory(
     ILoggerFactory loggerFactory) : IStringLocalizerFactory
 {
     private readonly ResourceManagerStringLocalizerFactory _factory = new(localizationOptions, loggerFactory);
+    private readonly ILogger<GenericResourceManagerStringLocalizerFactory> _logger = loggerFactory.CreateLogger<GenericResourceManagerStringLocalizerFactory>();
 
     public IStringLocalizer Create(Type resourceSource)
     {
+        _logger.LogDebug("Creating a localizer for a type '{localization.type}'.", resourceSource);
+
         TypeInfo typeInfo = resourceSource.GetTypeInfo();
         string assemblyName = typeInfo.Assembly.GetName().Name;
 
         var attribute = resourceSource.GetCustomAttribute<LocalizationAliasAttribute>();
 
         string typeName;
-        if (attribute != null) typeName = attribute.Alias;
+        if (attribute != null) {
+            typeName = attribute.Alias;
+            _logger.LogTrace("An alias '{localization.alias}' was found for the type '{localization.type}'.", attribute.Alias, resourceSource);
+        }
         else
         {
             typeName = resourceSource.Name;
@@ -38,8 +44,21 @@ internal sealed class GenericResourceManagerStringLocalizerFactory(
         }
         string baseName = $"{resourceSource.Namespace}.{typeName}"[assemblyName.Length..].Trim('.');
 
-        return Create(baseName, assemblyName);
+        var localizer = _factory.Create(baseName, assemblyName);
+
+        _logger.LogTrace("localizer for type '{localization.type}' created.", resourceSource);
+
+        return localizer;
     }
 
-    public IStringLocalizer Create(string baseName, string location) => _factory.Create(baseName, location);
+    public IStringLocalizer Create(string baseName, string location)
+    {
+        _logger.LogTrace("Creating a localizer for baseName '{localization.baseName}' and '{localization.location}'.", baseName, location);
+
+        var localizer = _factory.Create(baseName, location);
+
+        _logger.LogTrace("localizer for baseName '{localization.baseName}' and '{localization.location}' created.", baseName, location);
+
+        return localizer;
+    }
 }

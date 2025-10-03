@@ -38,18 +38,18 @@ internal sealed class LoggedStringLocalizer<TResourceSource>(
         if (!localizedString.ResourceNotFound)
         {
             _logger.LogTrace(
-                $"""
-                    The localizer managed to get the value from the key '{localizedString.Name}' 
-                    in the resource '{localizedString.SearchedLocation}' for the culture '{CultureInfo.CurrentUICulture}'.
-                    """);
+                """
+                The localizer managed to get the value from the key '{localization.name}' 
+                in the resource '{localization.location}' for the culture '{localization.culture}'.
+                """, localizedString.Name, localizedString.SearchedLocation, CultureInfo.CurrentUICulture);
         }
         else
         {
             _logger.LogWarning(
-                $"""
-                Localizer failed to retrieve value for key '{localizedString.Name}' 
-                in resource '{localizedString.SearchedLocation}' for culture '{CultureInfo.CurrentUICulture}'.
-                """);
+                """
+                Localizer failed to retrieve value for key '{localization.name}' 
+                in resource '{localization.location}' for culture '{localization.culture}'.
+                """, localizedString.Name, localizedString.SearchedLocation, CultureInfo.CurrentUICulture);
         }
     }
 }
